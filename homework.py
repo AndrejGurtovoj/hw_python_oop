@@ -20,6 +20,7 @@ class InfoMessage:
                 f'Ср. скорость: {self.speed:.3f} км/ч; '
                 f'Потрачено ккал: {self.calories:.3f}.')
 
+
 class Training:
     """Базовый класс тренировки."""
     LEN_STEP = 0.65
@@ -47,6 +48,7 @@ class Training:
 
     def get_spent_calories(self) -> float:
         """Получить количество затраченных калорий."""
+        pass
 
     def show_training_info(self) -> InfoMessage:
         """Вернуть информационное сообщение о выполненной тренировке."""
@@ -57,18 +59,19 @@ class Training:
                                    self.get_spent_calories())
         return info_message
 
+
 class Running(Training):
     """Тренировка: бег."""
     CF_RUN_1 = 18
     CF_RUN_2 = 20
     TRAINING_TYPE = 'RUN'
-    
+
     def get_spent_calories(self) -> float:
         cal = self.CF_RUN_1 * self.get_mean_speed() - self.CF_RUN_2
         calories = cal * self.weight / self.M_IN_KM * self.duration * 60
-        return calories       
-        
-        
+        return calories
+
+
 class SportsWalking(Training):
     """Тренировка: спортивная ходьба."""
     CF_WALK_1 = 0.035
@@ -90,7 +93,8 @@ class SportsWalking(Training):
         calories_3 = calories_2 * self.CF_WALK_3 * self.weight
         calories = (calories_1 + calories_3) * self.duration * 60
         return calories
-        
+
+
 class Swimming(Training):
     """Тренировка: плавание."""
     CF_SW_1 = 1.1
@@ -119,15 +123,18 @@ class Swimming(Training):
         calories = calories_1 * self.CF_SW_2 * self.weight
         return calories
 
+
 def read_package(workout_type: str, data: list) -> Training:
     """Прочитать данные полученные от датчиков."""
     type_dict = {'SWM': Swimming, 'RUN': Running, 'WLK': SportsWalking}
     return type_dict[workout_type](*data)
 
+
 def main(training: Training) -> None:
     """Главная функция."""
     info = training.show_training_info()
     print(info.get_message())
+
 
 if __name__ == '__main__':
     packages = [
