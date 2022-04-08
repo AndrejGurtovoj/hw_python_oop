@@ -19,6 +19,7 @@ class InfoMessage:
                 f'Дистанция: {self.distance:.3f} км; '
                 f'Ср. скорость: {self.speed:.3f} км/ч; '
                 f'Потрачено ккал: {self.calories:.3f}.')
+
 class Training:
     """Базовый класс тренировки."""
     LEN_STEP = 0.65
@@ -55,6 +56,7 @@ class Training:
                                    self.get_mean_speed(),
                                    self.get_spent_calories())
         return info_message
+
 class Running(Training):
     """Тренировка: бег."""
     CF_RUN_1 = 18
@@ -65,6 +67,7 @@ class Running(Training):
         cal = self.CF_RUN_1 * self.get_mean_speed() - self.CF_RUN_2
         calories = cal * self.weight / self.M_IN_KM * self.duration * 60
         return calories       
+        
         
 class SportsWalking(Training):
     """Тренировка: спортивная ходьба."""
@@ -87,6 +90,7 @@ class SportsWalking(Training):
         calories_3 = calories_2 * self.CF_WALK_3 * self.weight
         calories = (calories_1 + calories_3) * self.duration * 60
         return calories
+        
 class Swimming(Training):
     """Тренировка: плавание."""
     CF_SW_1 = 1.1
