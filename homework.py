@@ -1,5 +1,6 @@
 from dataclasses import dataclass
-from typing import Dict, Type
+from typing import Dict
+
 
 @dataclass
 class InfoMessage:
@@ -16,7 +17,6 @@ class InfoMessage:
         self.speed = speed
         self.calories = calories
         self.duration = duration
-
 
     def get_message(self) -> str:
         return (f'Тип тренировки: {self.training_type}; '
@@ -94,7 +94,7 @@ class SportsWalking(Training):
 
     def get_spent_calories(self) -> float:
         calories_1 = self.CF_WALK_1 * self.weight
-        calories_2 = self.get_mean_speed()** self.CF_WALK_2 // self.height
+        calories_2 = self.get_mean_speed() ** self.CF_WALK_2 // self.height
         calories_3 = calories_2 * self.CF_WALK_3 * self.weight
         calories = (calories_1 + calories_3) * self.duration * self.MIN_IN_H
         return calories
@@ -131,6 +131,8 @@ class Swimming(Training):
 
 def read_package(workout_type: str, data: list) -> Training:
     """Прочитать данные полученные от датчиков."""
+    from typing import Type
+    Type[Training]
     parameters_train: Dict[str, type[Training]] = {
         'SWM': Swimming,
         'RUN': Running,
@@ -138,7 +140,7 @@ def read_package(workout_type: str, data: list) -> Training:
     if workout_type in parameters_train:
         return parameters_train[workout_type](*data)
     else:
-        raise ValueError("Тренировка не найдена")        
+        raise ValueError("Тренировка не найдена")
 
 
 def main(training: Training) -> None:
@@ -152,11 +154,10 @@ if __name__ == '__main__':
     packages = [
         ('SWM', [720, 1, 80, 25, 40]),
         ('RUN', [15000, 1, 75]),
-        ('WLK', [9000, 1, 75, 180]),]
-    
-    
-    for workout_type, data in packages: 
+        ('WLK', [9000, 1, 75, 180]), ]
 
-        training = read_package(workout_type, data) 
+    for workout_type, data in packages:
+
+        training = read_package(workout_type, data)
 
         main(training)
